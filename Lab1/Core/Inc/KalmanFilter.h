@@ -3,16 +3,17 @@
 
 
 typedef struct {
+    float p;
     float q;
     float r;
     float x;
-    float p;
     float k;
-} KalmanFilter;
+} kalman_state;
 
-void KalmanFilter_init(KalmanFilter *kf, double q, double r, double p, double initial_value);
+void KalmanFilter_init(kalman_state *kf, float q, float r, float p, float initial_value);
 
-double KalmanFilter_update(KalmanFilter *kf, double measurement);
+float KalmanFilter_update(kalman_state *kf, float measurement);
 
+extern void kalman(kalman_state *kf, float measurement);
 
 #endif

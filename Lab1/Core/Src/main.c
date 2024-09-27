@@ -18,6 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "KalmanFilter.h"
+#include <stdlib.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -62,7 +64,10 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
-
+  kalman_state *kalmanFilterObject = malloc(sizeof(kalman_state));
+  KalmanFilter_init(kalmanFilterObject, 0.1, 0.1, 0.1, 5);
+  kalman(kalmanFilterObject, 0);
+  KalmanFilter_update(kalmanFilterObject, 0);
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
