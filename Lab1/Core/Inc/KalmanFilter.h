@@ -14,6 +14,6 @@ void KalmanFilter_init(kalman_state *kf, float q, float r, float p, float initia
 
 float KalmanFilter_update(kalman_state *kf, float measurement);
 
-extern void kalman(kalman_state *kf, float measurement);
+extern float kalman(kalman_state *kf, float measurement);
 
 #endif

@@ -66,7 +66,11 @@ int main(void)
 {
   kalman_state *kalmanFilterObject = malloc(sizeof(kalman_state));
   KalmanFilter_init(kalmanFilterObject, 0.1, 0.1, 0.1, 5);
-  kalman(kalmanFilterObject, 0);
+  //to test results from Table 1 in lab doc:
+  float x;
+  for(int i=0; i<5; i++){
+	  x = kalman(kalmanFilterObject, i);
+  }
   KalmanFilter_update(kalmanFilterObject, 0);
   /* USER CODE BEGIN 1 */
 

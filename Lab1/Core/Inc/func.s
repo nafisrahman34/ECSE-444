@@ -17,7 +17,7 @@
 */
 
 kalman:
-	PUSH {R1}
+	PUSH {R1} //following ARM calling convention
 	//self->p = self->p + self->q:
 	VLDR.f32 S1, [R0] //store self->p in floating point register S1
 	VLDR.f32 S2, [R0, #4] //store self->q in floating point register S2
@@ -37,16 +37,37 @@ kalman:
 	VSTR.f32 S5, [R0, #12] //store self->x value in state variable
 
 	//self->p = (1 - self->k)*self->p
-	MOV R1, #0x3F800000 //hexadecimal representation of 1.0
-	VMOV S9, R1 //store value of 1.0 in floating point register
+	//MOV R1, #0x3F800000 //hexadecimal representation of 1.0
+	VMOV S9, #1.0 //store value of 1.0 in floating point register
 	VSUB.f32 S10, S9, S4 //do (1-self->k) and store result in S10
 	VMUL.f32 S1, S10, S1 //S1 stores self->p value; do self->p=(1-self->k)*self->p
 	VSTR.f32 S1, [R0] //store self->p back in state variable
 
+	//check the FPSCR for errors
+	VMRS R1, FPSCR //move the contents of FPSCR to R1
+	TST R1, #8 //test if the overflow flag (bit 3) is set
+	BNE handle_error //branch if overflow occured
+
+	TST R1, #4 //test if the underflow flag (bit 2) is set
+    BNE handle_error //branch if underflow occured
+
+    TST R1, #2 //test if the divide by zero flag (bit 1) is set
+    BNE handle_error //branch if divide by zero occured
+
+    TST R1, #1 //test if the invalid operation flag (bit 0) is set
+    BNE handle_error //branch if invalid operation occured
+
 	//return self->x
 	VMOV S0, S5 //move self->x to S0
+	POP {R1} //reset register to initial state
+	BX LR //return
+
+
+handle_error:
+	VMOV S0, #-1.0 //move value of -1.0 to register that will store the value to be returned
 	POP {R1}
 	BX LR //return
+
 
 
 
