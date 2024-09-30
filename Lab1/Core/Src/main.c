@@ -73,6 +73,8 @@ int main(void)
 	  x = kalman(kalmanFilterObject, i);
   }
   KalmanFilter_update(kalmanFilterObject, 0);
+
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
