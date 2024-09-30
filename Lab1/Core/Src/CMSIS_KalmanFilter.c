@@ -1,7 +1,7 @@
 #include "CMSIS_KalmanFilter.h"
 #include "arm_math.h"
 
-int Kalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length) {
+int CMSISKalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length) {
 	//Null input exception
 	if (InputArray == NULL || OutputArray == NULL || kstate == NULL) {
 	        return -1;

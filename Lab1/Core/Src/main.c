@@ -20,6 +20,7 @@
 #include "main.h"
 #include "KalmanFilter.h"
 #include <stdlib.h>
+#include "CMSIS_KalmanFilter.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

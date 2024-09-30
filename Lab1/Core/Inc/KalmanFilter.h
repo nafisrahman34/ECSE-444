@@ -12,8 +12,8 @@ typedef struct {
 
 void KalmanFilter_init(kalman_state *kf, float q, float r, float p, float initial_value);
 
-float KalmanFilter_update(kalman_state *kf, float measurement);
-
+//float KalmanFilter_update(kalman_state *kf, float measurement);
+int Kalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length);
 extern float kalman(kalman_state *kf, float measurement);
 
 #endif

@@ -9,4 +9,4 @@ typedef struct {
     float x;
     float k;
 } kalman_state;
-int Kalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length);
+int CMSISKalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length);
