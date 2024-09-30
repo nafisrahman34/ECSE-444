@@ -16,6 +16,7 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.cdt.core 1 0 2024-09-23 21:55:46.489
 !MESSAGE Indexed 'Lab1' (26 sources, 144 headers) in 3.53 sec: 13,530 declarations; 51,435 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.26%)
+<<<<<<< Updated upstream
 
 !ENTRY org.eclipse.ui.workbench 4 0 2024-09-27 04:09:12.093
 !MESSAGE An internal error has occurred.
@@ -259,4 +260,63 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 !MESSAGE Log4j2 initialized with config file C:\Users\User\OneDrive\Desktop\ECSE-444\.metadata\.log4j2.xml
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-09-28 18:39:10.884
+=======
+!SESSION 2024-09-29 12:32:01.879 -----------------------------------------------
+eclipse.buildId=Version 1.16.0
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data D:\Learning\Fall 2024\ECSE444\ECSE-444
+
+!ENTRY org.eclipse.core.resources 2 10035 2024-09-29 12:32:02.753
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-09-29 12:32:05.037
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-09-29 12:32:05.042
+!MESSAGE Log4j2 initialized with config file D:\Learning\Fall 2024\ECSE444\ECSE-444\.metadata\.log4j2.xml
+
+!ENTRY org.eclipse.cdt.core 4 0 2024-09-29 12:32:08.520
+!MESSAGE Failed to open C/C++ index file D:\Learning\Fall 2024\ECSE444\ECSE-444\.metadata\.plugins\org.eclipse.cdt.core\Lab1.1727142942939.pdom - rebuilding the index
+!STACK 1
+org.eclipse.core.runtime.CoreException: Corrupted database: Lab1.1727142942939.pdom
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:323)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:303)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getRecPtr(Database.java:518)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMLinkage.getLinkageID(PDOMLinkage.java:140)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.readLinkages(PDOM.java:479)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.loadDatabase(PDOM.java:460)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.<init>(PDOM.java:435)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.<init>(WritablePDOM.java:67)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.<init>(WritablePDOM.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMManager.getOrCreatePDOM(PDOMManager.java:391)
+	at org.eclipse.cdt.internal.core.pdom.PDOMManager.createIndexer(PDOMManager.java:592)
+	at org.eclipse.cdt.internal.core.pdom.PDOMSetupJob.run(PDOMSetupJob.java:61)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2024-09-29 12:32:08.521
+!MESSAGE Corrupted database: Lab1.1727142942939.pdom
+
+!ENTRY org.eclipse.cdt.core 4 0 2024-09-29 12:32:08.521
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Corrupted database: Lab1.1727142942939.pdom
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:323)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:303)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getRecPtr(Database.java:518)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMLinkage.getLinkageID(PDOMLinkage.java:140)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.readLinkages(PDOM.java:479)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.loadDatabase(PDOM.java:460)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.<init>(PDOM.java:435)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.<init>(WritablePDOM.java:67)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.<init>(WritablePDOM.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMManager.getOrCreatePDOM(PDOMManager.java:399)
+	at org.eclipse.cdt.internal.core.pdom.PDOMManager.createIndexer(PDOMManager.java:592)
+	at org.eclipse.cdt.internal.core.pdom.PDOMSetupJob.run(PDOMSetupJob.java:61)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2024-09-29 12:32:08.521
+!MESSAGE Corrupted database: Lab1.1727142942939.pdom
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-09-29 12:32:08.722
+>>>>>>> Stashed changes
 !MESSAGE Started RMI Server, listening on port 41337
