@@ -3,11 +3,11 @@
 
 int CMSISKalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length) {
 	//Null input exception
-	if (InputArray == NULL || OutputArray == NULL || kf == NULL) {
+	if (InputArray == 0 || OutputArray == 0  || kf == 0) {
 	        return -1;
 	    }
     for (int i = 0; i < Length; i++) {
-        kf->p = arm_add_f32(&kf->p, &kf->q,&kf->p,1);
+        arm_add_f32(&kf->p, &kf->q,&kf->p,1);
         arm_add_f32(&kf->p, &kf->r,&kf->k,1);
 
         //check division by 0

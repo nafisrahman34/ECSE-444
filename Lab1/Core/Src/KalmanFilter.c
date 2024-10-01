@@ -18,7 +18,7 @@ void KalmanFilter_init(kalman_state *kf, float q, float r, float p, float initia
 //}
 int Kalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length){
 	for (int i = 0; i < Length; i++) {
-		if (InputArray == NULL || OutputArray == NULL || kstate == NULL) {
+		if (InputArray == 0 || OutputArray == 0 || kf == 0) {
 			        return -1;
 			    }
 	        kf->p += kf->q;
@@ -35,5 +35,5 @@ int Kalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Le
 			}
 	        OutputArray[i] = kf->x;
 	    }
-	    return kf->x;
+	    return 0;
 }

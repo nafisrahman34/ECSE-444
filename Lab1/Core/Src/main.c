@@ -21,6 +21,7 @@
 #include "KalmanFilter.h"
 #include <stdlib.h>
 #include "CMSIS_KalmanFilter.h"
+#include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -65,14 +66,34 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+  HAL_Init();
+  SystemClock_Config();
   kalman_state *kalmanFilterObject = malloc(sizeof(kalman_state));
   KalmanFilter_init(kalmanFilterObject, 0.1, 0.1, 0.1, 5);
   //to test results from Table 1 in lab doc:
+
   float x;
+  float inarray[5] = {0,1,2,3,4};
+  int len = sizeof(inarray) / sizeof(inarray[0]);
   for(int i=0; i<5; i++){
-	  x = kalman(kalmanFilterObject, i);
+	  x = kalman(kalmanFilterObject, inarray[i]);
+
   }
-  KalmanFilter_update(kalmanFilterObject, 0);
+  //C Version
+  float outarray[len];
+  kalman_state *kfc = malloc(sizeof(kalman_state));
+  KalmanFilter_init(kfc, 0.1, 0.1, 0.1, 5);
+
+  int state = Kalmanfilter( inarray, outarray, kfc,len);
+  //CMSIS-DSP C version
+  float CMSISoutarray[len];
+  kalman_state *CMSISkfc = malloc(sizeof(kalman_state));
+  KalmanFilter_init(CMSISkfc, 0.1, 0.1, 0.1, 5);
+
+  state = CMSISKalmanfilter( inarray, CMSISoutarray, CMSISkfc,len);
+
+
+  //KalmanFilter_update(kalmanFilterObject, 0);
 
 
   /* USER CODE BEGIN 1 */
@@ -82,14 +103,14 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
 
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
 
   /* Configure the system clock */
-  SystemClock_Config();
+
 
   /* USER CODE BEGIN SysInit */
 
@@ -105,7 +126,12 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  for(int i=0; i<5; i++){
+	 	  printf("%d",i);
+	 	  fflush(stdout);
+	 	  HAL_Delay(1000);
 
+	   }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
