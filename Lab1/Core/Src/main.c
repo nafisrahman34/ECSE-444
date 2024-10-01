@@ -71,21 +71,27 @@ int main(void)
   kalman_state *kalmanFilterObject = malloc(sizeof(kalman_state));
   KalmanFilter_init(kalmanFilterObject, 0.1, 0.1, 0.1, 5);
   //to test results from Table 1 in lab doc:
-
-  float x;
+//
+//  float x;
+  //input array
   float inarray[5] = {0,1,2,3,4};
   int len = sizeof(inarray) / sizeof(inarray[0]);
+
+  // arm subroutine test
+  float arm_outarray[len];
   for(int i=0; i<5; i++){
-	  x = kalman(kalmanFilterObject, inarray[i]);
+	  arm_outarray[i] = kalman(kalmanFilterObject, inarray[i]);
 
   }
-  //C Version
+
+  //C Version test
   float outarray[len];
   kalman_state *kfc = malloc(sizeof(kalman_state));
   KalmanFilter_init(kfc, 0.1, 0.1, 0.1, 5);
 
   int state = Kalmanfilter( inarray, outarray, kfc,len);
-  //CMSIS-DSP C version
+
+  //CMSIS-DSP C version test
   float CMSISoutarray[len];
   kalman_state *CMSISkfc = malloc(sizeof(kalman_state));
   KalmanFilter_init(CMSISkfc, 0.1, 0.1, 0.1, 5);
