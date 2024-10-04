@@ -1,7 +1,7 @@
-#include "CMSIS_KalmanFilter.h"
+#include <KalmanFilter_CMSIS.h>
 #include "arm_math.h"
 
-int CMSISKalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length) {
+int kalmanFilter_CMSIS_update(float* InputArray, float* OutputArray, int Length, kalman_state* kf) {
 	//Null input exception
 	if (InputArray == 0 || OutputArray == 0  || kf == 0) {
 	        return -1;
@@ -35,8 +35,8 @@ int CMSISKalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, i
 void Processing(float* InputArray, float* OutputArray, float* diff, float* stdv, float* avg, float* corrl, float* conv, int length){
 	arm_sub_f32(InputArray, OutputArray, diff, length);
 	arm_abs_f32(diff, diff, length);
-	arm_mean_f32(diff, length, &avg);
-	arm_std_f32(diff, length, &stdv);
+	arm_mean_f32(diff, length, avg);
+	arm_std_f32(diff, length, stdv);
 	arm_correlate_f32(InputArray,length,OutputArray, length, corrl);
 	arm_conv_f32(InputArray,length,OutputArray, length, conv);
 

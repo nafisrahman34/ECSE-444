@@ -17,10 +17,10 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <KalmanFilter_C.h>
+#include <KalmanFilter_CMSIS.h>
 #include "main.h"
-#include "KalmanFilter.h"
 #include <stdlib.h>
-#include "CMSIS_KalmanFilter.h"
 #include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
@@ -35,7 +35,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define ITM_Port32(n) (*((volatile unsigned long *) (0xE0000000+4*n)))
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -64,43 +64,89 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
+int kalmanFilter_ARM_update(float* inputArray, float* outputArray, int length, struct kalman_state* kstate){
+for(int i=0; i<length; i++){
+	  outputArray[i] = kalman(kstate, inputArray[i]);
+
+	  if (isnan(outputArray[i])){
+		  return -1;
+	  }
+  }
+return 0;
+}
 int main(void)
 {
   HAL_Init();
   SystemClock_Config();
-  kalman_state *kalmanFilterObject = malloc(sizeof(kalman_state));
-  KalmanFilter_init(kalmanFilterObject, 0.1, 0.1, 0.1, 5);
+  kalman_state *kf = malloc(sizeof(kalman_state));
+  KalmanFilter_init(kf, 0.1, 0.1, 0.1, 5);
   //to test results from Table 1 in lab doc:
 //
 //  float x;
   //input array
-  float inarray[5] = {0,1,2,3,4};
+  float inarray[] = {10.4915760032, 10.1349974709, 9.53992591829, 9.60311878706,
+      10.4858891793, 10.1104642352, 9.51066931906, 9.75755656493,
+      9.82154078273, 10.2906541933, 10.4861328671, 9.57321181356,
+      9.70882714139, 10.4359069357, 9.70644021369, 10.2709894039,
+      10.0823149505, 10.2954563443, 9.57130449017, 9.66832136479,
+      10.4521677502, 10.4287240667, 10.1833650752, 10.0066049721,
+      10.3279461634, 10.4767210803, 10.3790964606, 10.1937408814,
+      10.0318963522, 10.4939180917, 10.2381858895, 9.59703103024,
+      9.62757986516, 10.1816981174, 9.65703773168, 10.3905666599,
+      10.0941977598, 9.93515274393, 9.71017053437, 10.0303874259,
+      10.0173504397, 9.69022731474, 9.73902896102, 9.52524419732,
+      10.3270730526, 9.54695650657, 10.3573960542, 9.88773266876,
+      10.1685038683, 10.1683694089, 9.88406620159, 10.3290065898,
+      10.2547227265, 10.4733422906, 10.0133952458, 10.4205693583,
+      9.71335255372, 9.89061396699, 10.1652744131, 10.2580948608,
+      10.3465431058, 9.98446410493, 9.79376005657, 10.202518901,
+      9.83867150985, 9.89532986869, 10.2885062658, 9.97748768804,
+      10.0403923759, 10.1538911808, 9.78303667556, 9.72420149909,
+      9.59117495073, 10.1716116012, 10.2015818969, 9.90650056596,
+      10.3251329834, 10.4550120431, 10.4925749165, 10.1548177178,
+      9.60547133785, 10.4644672766, 10.2326496615, 10.2279703226,
+      10.3535284606, 10.2437410625, 10.3851531317, 9.90784804928,
+      9.98208344925, 9.52778805729, 9.69323876912, 9.92987312087,
+      9.73938925207, 9.60543743477, 9.79600805462, 10.4950988486,
+      10.2814361401, 9.7985283333, 9.6287888922, 10.4491538991,
+      9.5799256668};
+
+
   int len = sizeof(inarray) / sizeof(inarray[0]);
-
-  // arm subroutine test
+  //arm prep
   float arm_outarray[len];
-  for(int i=0; i<5; i++){
-	  arm_outarray[i] = kalman(kalmanFilterObject, inarray[i]);
-
-  }
-
-  //C Version test
+  //C prep
   float outarray[len];
   kalman_state *kfc = malloc(sizeof(kalman_state));
   KalmanFilter_init(kfc, 0.1, 0.1, 0.1, 5);
-
-  int state = Kalmanfilter( inarray, outarray, kfc,len);
-
-  //CMSIS-DSP C version test
+  //CMSIS prep
   float CMSISoutarray[len];
   kalman_state *CMSISkfc = malloc(sizeof(kalman_state));
   KalmanFilter_init(CMSISkfc, 0.1, 0.1, 0.1, 5);
+  ITM_Port32(31) = 3;
+  // arm subroutine test
 
-  state = CMSISKalmanfilter( inarray, CMSISoutarray, CMSISkfc,len);
+  ITM_Port32(31) = 1;
 
+  int arm_state = kalmanFilter_ARM_update(inarray,arm_outarray, len,kf);
+  //C Version test
+
+  ITM_Port32(31) = 2;
+  int c_state = kalmanFilter_C_update( inarray, outarray,len, kfc);
+
+  //CMSIS-DSP C version test
+
+  ITM_Port32(31) = 3;
+  int CMSIS_state = kalmanFilter_CMSIS_update( inarray, CMSISoutarray,len, CMSISkfc);
+  ITM_Port32(31) = 4;
 
   //KalmanFilter_update(kalmanFilterObject, 0);
-
+  float diff[len];
+  float stdv;
+  float avg;
+  float corl[2*len-1];
+  float conv[2*len-1];
+  Processing(inarray,CMSISoutarray,diff,&stdv,&avg,corl,conv,len);
 
   /* USER CODE BEGIN 1 */
 

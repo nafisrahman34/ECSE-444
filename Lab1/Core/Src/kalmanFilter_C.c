@@ -1,4 +1,4 @@
-#include "KalmanFilter.h"
+#include <KalmanFilter_C.h>
 
 void KalmanFilter_init(kalman_state *kf, float q, float r, float p, float initial_value) {
     kf->q = q;
@@ -16,7 +16,7 @@ void KalmanFilter_init(kalman_state *kf, float q, float r, float p, float initia
 //
 //    return kf->x;
 //}
-int Kalmanfilter(float* InputArray, float* OutputArray, kalman_state* kf, int Length){
+int kalmanFilter_C_update(float* InputArray, float* OutputArray, int Length, kalman_state* kf){
 	for (int i = 0; i < Length; i++) {
 		if (InputArray == 0 || OutputArray == 0 || kf == 0) {
 			        return -1;

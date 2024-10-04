@@ -949,3 +949,114 @@ java.lang.Exception: "D:\Learning\Fall 2024\ECSE444\ECSE-444\Lab1\Debug\Lab1.elf
 
 !ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-09-30 21:40:29.052
 !MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-10-01 14:01:42.971
+!MESSAGE Indexed 'Lab1' (25 sources, 123 headers) in 3.41 sec: 14,054 declarations; 49,233 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.27%)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 14:33:06.970
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 4 2024-10-01 14:34:11.080
+!MESSAGE NullPointerException while trying to calculated source lookup path. This can be ignored if it occurs while terminating a debug session. See Bug 500988.
+!STACK 0
+java.lang.NullPointerException: Cannot read the array length because "containers" is null
+	at org.eclipse.cdt.dsf.gdb.launching.GdbSourceLookupDirector.collectSubstitutionsPaths(GdbSourceLookupDirector.java:102)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbSourceLookupDirector.collectSubstitutionsPaths(GdbSourceLookupDirector.java:146)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbSourceLookupDirector.getSubstitutionsPaths(GdbSourceLookupDirector.java:72)
+	at org.eclipse.cdt.dsf.gdb.service.GDBSourceLookup.getSubstitutionsPaths(GDBSourceLookup.java:124)
+	at org.eclipse.cdt.dsf.gdb.service.GDBSourceLookup.sourceContainersChanged(GDBSourceLookup.java:139)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbSourceLookupParticipant.sourceContainersChangedOnDispatchThread(GdbSourceLookupParticipant.java:120)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbSourceLookupParticipant$1.run(GdbSourceLookupParticipant.java:85)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 14:43:52.809
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 14:45:33.373
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 14:46:33.321
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 15:35:45.831
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 15:37:38.985
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY org.eclipse.cdt.ui 4 0 2024-10-01 15:49:04.650
+!MESSAGE Error in CDT UI during reconcile
+!STACK 1
+C Model Exception: C Model Status [Element main.c does not exist.]
+	at org.eclipse.cdt.internal.core.model.CElement.newNotPresentException(CElement.java:485)
+	at org.eclipse.cdt.internal.core.model.TranslationUnit.makeConsistent(TranslationUnit.java:583)
+	at org.eclipse.cdt.internal.core.model.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:65)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:641)
+	at org.eclipse.cdt.internal.core.model.WorkingCopy.reconcile(WorkingCopy.java:365)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:79)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:64)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:89)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:346)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+!SUBENTRY 1 org.eclipse.cdt.core 4 969 2024-10-01 15:49:04.654
+!MESSAGE Element main.c does not exist.
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 15:51:46.618
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 15:53:10.362
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.880
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100096 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.880
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100032 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758099968 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100512 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100528 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100544 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100560 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100480 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758359300 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758358544 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758100400 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.881
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758157308 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.882
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758366724 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 4 0 2024-10-01 15:53:22.882
+!MESSAGE SWVConfigureSequence.writeRegister() : 3758358768 : KO
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2024-10-01 15:53:28.763
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 120000000; div: 60
