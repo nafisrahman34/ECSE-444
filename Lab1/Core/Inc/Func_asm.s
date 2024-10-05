@@ -17,7 +17,6 @@
 */
 
 kalman:
-	PUSH {R1} //following ARM calling convention
 	//self->p = self->p + self->q:
 	VLDR.f32 S1, [R0] //store self->p in floating point register S1
 	VLDR.f32 S2, [R0, #4] //store self->q in floating point register S2
@@ -59,9 +58,7 @@ kalman:
 
 	//return self->x
 	VMOV S0, S5 //move self->x to S0
-	POP {R1} //reset register to initial state
 	BX LR //return
-
 
 handle_error:
 	VMOV S0, #-1.0 //move value of -1.0 to register that will store the value to be returned

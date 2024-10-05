@@ -78,12 +78,8 @@ int main(void)
 {
   HAL_Init();
   SystemClock_Config();
-  kalman_state *kf = malloc(sizeof(kalman_state));
-  KalmanFilter_init(kf, 0.1, 0.1, 0.1, 5);
+
   //to test results from Table 1 in lab doc:
-//
-//  float x;
-  //input array
   float inarray[] = {10.4915760032, 10.1349974709, 9.53992591829, 9.60311878706,
       10.4858891793, 10.1104642352, 9.51066931906, 9.75755656493,
       9.82154078273, 10.2906541933, 10.4861328671, 9.57321181356,
@@ -115,6 +111,8 @@ int main(void)
   int len = sizeof(inarray) / sizeof(inarray[0]);
   //arm prep
   float arm_outarray[len];
+  kalman_state *kf = malloc(sizeof(kalman_state));
+  KalmanFilter_init(kf, 0.1, 0.1, 0.1, 5);
   //C prep
   float outarray[len];
   kalman_state *kfc = malloc(sizeof(kalman_state));
@@ -123,6 +121,9 @@ int main(void)
   float CMSISoutarray[len];
   kalman_state *CMSISkfc = malloc(sizeof(kalman_state));
   KalmanFilter_init(CMSISkfc, 0.1, 0.1, 0.1, 5);
+
+
+
   ITM_Port32(31) = 3;
   // arm subroutine test
 
