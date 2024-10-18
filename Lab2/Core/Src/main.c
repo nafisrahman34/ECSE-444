@@ -61,7 +61,9 @@ static void MX_ADC1_Init(void);
 //This is the interrupt function that is called when the button is pressed
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
+	//triggers on or off state
 	LEDState = !LEDState;
+	//sets the LED pin to current state value
 	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, LEDState);
 }
 /* USER CODE END 0 */
@@ -97,22 +99,25 @@ int main(void)
   MX_GPIO_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-
+  //Calibrate ADC:
+  if(HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK){
+	  Error_Handler();
+    }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  uint16_t rawVoltage;
+  int32_t rawVoltage;
   float VREF;
   while (1)
   {
 	  //Reference voltage conversion:
 	  HAL_ADC_Start(&hadc1);
 	  if(HAL_ADC_PollForConversion(&hadc1, 300) == HAL_OK){
-		  rawVoltage = HAL_ADC_GetValue(&hadc1);
-		  uint16_t VREFINT_CAL = *((uint16_t *) 0x1FFF75AA); //the calibration value
+		  ADCValue = (int32_t) HAL_ADC_GetValue(&hadc1);
+		  int32_t VREFINT_CAL =(int32_t) *((uint16_t *) 0x1FFF75AA); //the calibration value
 		  float VREF_Charac = 3.0; //voltage characterized at VREFINT during manufacturing, specified in datasheet
-		  VREF = VREF_Charac*((float)VREFINT_CAL/(float)rawVoltage);
+		  VREF = VREF_Charac*((float) VREFINT_CAL/ADCValue);
 	  }
 
     /* USER CODE BEGIN 3 */
