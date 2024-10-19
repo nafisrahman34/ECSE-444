@@ -44,6 +44,10 @@ ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN PV */
 bool LEDState;
+float output;
+int32_t rawVoltage;
+float VREF;
+float temp;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,13 +74,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   * @brief  The application entry point.
   * @retval int
   */
-static void MX_ADC1_Init1(void)
+static void MX_ADC1_Init(void)
 {
 
 /* USER CODE BEGIN ADC1_Init 0 */
 
 /* USER CODE END ADC1_Init 0 */
-
 
 
 /* USER CODE BEGIN ADC1_Init 1 */
@@ -85,25 +88,25 @@ static void MX_ADC1_Init1(void)
 
 /** Common config
 */
-hadc1.Instance = ADC1;
-hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
-hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
-hadc1.Init.LowPowerAutoWait = DISABLE;
-hadc1.Init.ContinuousConvMode = DISABLE;
-hadc1.Init.NbrOfConversion = 1;
-hadc1.Init.DiscontinuousConvMode = DISABLE;
-hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-hadc1.Init.DMAContinuousRequests = DISABLE;
-hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-hadc1.Init.OversamplingMode = DISABLE;
-if (HAL_ADC_Init(&hadc1) != HAL_OK)
-{
-Error_Handler();
-}
+	hadc1.Instance = ADC1;
+	hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
+	hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+	hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+	hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
+	hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+	hadc1.Init.LowPowerAutoWait = DISABLE;
+	hadc1.Init.ContinuousConvMode = DISABLE;
+	hadc1.Init.NbrOfConversion = 1;
+	hadc1.Init.DiscontinuousConvMode = DISABLE;
+	hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+	hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+	hadc1.Init.DMAContinuousRequests = DISABLE;
+	hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+	hadc1.Init.OversamplingMode = DISABLE;
+	if (HAL_ADC_Init(&hadc1) != HAL_OK)
+	{
+		Error_Handler();
+	}
 
 /** Configure Regular Channel
 */
@@ -117,7 +120,7 @@ Error_Handler();
 int main(void)
 {
 
-	ADC_ChannelConfTypeDef sConfig = {0};
+	ADC_ChannelConfTypeDef sConfig;
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -140,47 +143,49 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init1();
+  MX_ADC1_Init();
+  while(HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK);
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  float temp;
-  int32_t rawVoltage;
-  float VREF;
+
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 	  if (LEDState){
-		  if(HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK) Error_Handler();
 		  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
 		  sConfig.Rank = ADC_REGULAR_RANK_1;
-		  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+		  sConfig.SamplingTime = ADC_SAMPLETIME_24CYCLES_5;
 		  sConfig.SingleDiff = ADC_SINGLE_ENDED;
 		  sConfig.OffsetNumber = ADC_OFFSET_NONE;
 		  sConfig.Offset = 0;
-		  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-		  {
-		  Error_Handler();
-		  }
+		  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
 		  HAL_ADC_Start(&hadc1);
-		  if(HAL_ADC_PollForConversion(&hadc1, 300) == HAL_OK){
-			  uint16_t TS_Data = HAL_ADC_GetValue(&hadc1);
-			  float calibratedTS_Data = (float) (3.3/3.0)*((int32_t)TS_Data);
+		  while(HAL_ADC_PollForConversion(&hadc1, 1000000) != HAL_OK);
+		  uint16_t TS_Data = HAL_ADC_GetValue(&hadc1);
+		  float calibratedTS_Data = (float) TS_Data;
+		  calibratedTS_Data = calibratedTS_Data*(3.3/3.0); //scale ADC data according to reference voltage
 
+		  //get calibration data from memory
+		  int32_t TS_CAL2 = (int32_t) *((uint16_t *) 0x1FFF75CA);
+		  int32_t TS_CAL1 = (int32_t) *((uint16_t *) 0x1FFF75A8);
+		  //temperatures at which calibration data was collected according to Datasheet
+		  int TS_CAL2_TEMP = 130;
+		  int TS_CAL1_TEMP = 30;
 
-			  int32_t TS_CAL2 = (int32_t) *((uint16_t*) 0x1FFF75CA);
-			  int32_t TS_CAL1 = (int32_t) *((uint16_t*) 0x1FFF75A8);
-			  int TS_CAL2_TEMP = 130;
-			  int TS_CAL1_TEMP = 30;
+		  //calculate avgSlope
+		  float numerator = 3.3*(TS_CAL2 - TS_CAL1); //scale calibration data according to reference voltage
+		  float avgSlope = numerator/(TS_CAL2_TEMP - TS_CAL1_TEMP);
+		  //calculate temperature in Celsius
+		  temp = (calibratedTS_Data - TS_CAL1)/avgSlope + 30.0f;
+		  output = temp;
 
-			  float avgSlope = (float) (TS_CAL2 - TS_CAL1)/(TS_CAL2_TEMP - TS_CAL1_TEMP);
-			  temp = -(calibratedTS_Data - TS_CAL1)/avgSlope + 30;
-	  }
 	  }else{
 		  sConfig.Channel = ADC_CHANNEL_VREFINT;
 		  sConfig.Rank = ADC_REGULAR_RANK_1;
@@ -188,17 +193,16 @@ int main(void)
 		  sConfig.SingleDiff = ADC_SINGLE_ENDED;
 		  sConfig.OffsetNumber = ADC_OFFSET_NONE;
 		  sConfig.Offset = 0;
-		  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-		  {
-		  Error_Handler();
-		  }
+		  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) Error_Handler();
+
 		  HAL_ADC_Start(&hadc1);
-		  	  if(HAL_ADC_PollForConversion(&hadc1, 300) == HAL_OK){
-		  		  int32_t ADCValue = (int32_t) HAL_ADC_GetValue(&hadc1);
-		  		  int32_t VREFINT_CAL =(int32_t) *((uint16_t *) 0x1FFF75AA); //the calibration value
-		  		  float VREF_Charac = 3.0; //voltage characterized at VREFINT during manufacturing, specified in datasheet
-		  		  VREF = VREF_Charac*((float) VREFINT_CAL/ADCValue);
-		  	  }
+		  if(HAL_ADC_PollForConversion(&hadc1, 1000000) == HAL_OK){
+			  int32_t ADCValue = (int32_t) HAL_ADC_GetValue(&hadc1);
+			  int32_t VREFINT_CAL =(int32_t) *((uint16_t *) 0x1FFF75AA); //the calibration value
+			  float VREF_Charac = 3.0; //voltage characterized at VREFINT during manufacturing, specified in datasheet
+			  VREF = VREF_Charac*((float) VREFINT_CAL/ADCValue); //calculate VREF
+			  output = VREF;
+		  }
 	  }
   }
   /* USER CODE END 3 */
@@ -254,63 +258,7 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief ADC1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_ADC1_Init(void)
-{
 
-  /* USER CODE BEGIN ADC1_Init 0 */
-
-  /* USER CODE END ADC1_Init 0 */
-
-  ADC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN ADC1_Init 1 */
-
-  /* USER CODE END ADC1_Init 1 */
-
-  /** Common config
-  */
-  hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
-  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
-  hadc1.Init.LowPowerAutoWait = DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
-  hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DiscontinuousConvMode = DISABLE;
-  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
-  hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.OversamplingMode = DISABLE;
-  if (HAL_ADC_Init(&hadc1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Regular Channel
-  */
-  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
-  sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
-  sConfig.SingleDiff = ADC_SINGLE_ENDED;
-  sConfig.OffsetNumber = ADC_OFFSET_NONE;
-  sConfig.Offset = 0;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN ADC1_Init 2 */
-
-  /* USER CODE END ADC1_Init 2 */
-
-}
 
 /**
   * @brief GPIO Initialization Function
