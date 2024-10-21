@@ -163,7 +163,7 @@ int main(void)
 	  if (LEDState){
 		  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
 
-		  sConfig.SamplingTime = ADC_SAMPLETIME_24CYCLES_5;
+		  sConfig.SamplingTime = ADC_SAMPLETIME_640CYCLES_5;
 
 
 		  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
@@ -182,8 +182,7 @@ int main(void)
 		  int TS_CAL1_TEMP = 30;
 
 		  //calculate avgSlope
-		  float numerator = 3.3*(TS_CAL2 - TS_CAL1); //scale calibration data according to reference voltage
-		  float avgSlope = numerator/(TS_CAL2_TEMP - TS_CAL1_TEMP);
+		  float avgSlope = (TS_CAL2 - TS_CAL1)/(TS_CAL2_TEMP - TS_CAL1_TEMP);
 		  //calculate temperature in Celsius
 		  temp = (calibratedTS_Data - TS_CAL1)/avgSlope + 30.0f;
 		  output = temp;
