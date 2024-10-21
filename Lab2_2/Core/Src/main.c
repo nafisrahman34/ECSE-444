@@ -151,7 +151,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.OffsetNumber = ADC_OFFSET_NONE;
+  sConfig.Offset = 0;
+  sConfig.SingleDiff = ADC_SINGLE_ENDED;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -159,11 +162,10 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  if (LEDState){
 		  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
-		  sConfig.Rank = ADC_REGULAR_RANK_1;
+
 		  sConfig.SamplingTime = ADC_SAMPLETIME_24CYCLES_5;
-		  sConfig.SingleDiff = ADC_SINGLE_ENDED;
-		  sConfig.OffsetNumber = ADC_OFFSET_NONE;
-		  sConfig.Offset = 0;
+
+
 		  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
 		  HAL_ADC_Start(&hadc1);
@@ -188,11 +190,9 @@ int main(void)
 
 	  }else{
 		  sConfig.Channel = ADC_CHANNEL_VREFINT;
-		  sConfig.Rank = ADC_REGULAR_RANK_1;
+
 		  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
-		  sConfig.SingleDiff = ADC_SINGLE_ENDED;
-		  sConfig.OffsetNumber = ADC_OFFSET_NONE;
-		  sConfig.Offset = 0;
+
 		  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) Error_Handler();
 
 		  HAL_ADC_Start(&hadc1);
