@@ -4096,3 +4096,22 @@ org.eclipse.core.runtime.AssertionFailedException: assertion failed: The applica
 
 !ENTRY org.eclipse.core.jobs 2 2 2024-10-21 03:55:25.457
 !MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
+!SESSION 2024-10-22 13:40:50.412 -----------------------------------------------
+eclipse.buildId=Version 1.16.0
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_CA
+Framework arguments:  -keyring /Users/rongweizhang/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/rongweizhang/.eclipse_keyring
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-10-22 13:41:02.300
+!MESSAGE Log4j2 initialized with config file /Users/rongweizhang/STM32CubeIDE/workspace_1.16.0/ECSE-444/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-10-22 13:41:15.435
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-10-22 13:41:22.578
+!MESSAGE Indexed 'Lab1' (27 sources, 123 headers) in 9.54 sec: 14,104 declarations; 49,435 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.27%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-10-22 13:41:42.766
+!MESSAGE Indexed 'Lab2_2' (25 sources, 119 headers) in 3.35 sec: 11,978 declarations; 55,657 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.25%)
