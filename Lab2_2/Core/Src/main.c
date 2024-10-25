@@ -162,18 +162,14 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  if (LEDState){
 		  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
-		  // TODO: Find minimum sample time
-		  sConfig.SamplingTime = ADC_SAMPLETIME_640CYCLES_5;
-
+		  sConfig.SamplingTime = ADC_SAMPLETIME_6CYCLES_5;
 
 		  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-
 		  HAL_ADC_Start(&hadc1);
 		  while(HAL_ADC_PollForConversion(&hadc1, 1000000) != HAL_OK);
 		  uint16_t TS_Data = HAL_ADC_GetValue(&hadc1);
 		  float calibratedTS_Data = (float) TS_Data;
-		  //TODO: use actual measured Vref
-		  calibratedTS_Data = calibratedTS_Data*(3.3/3.0); //scale ADC data according to reference voltage
+		  calibratedTS_Data = calibratedTS_Data*(VREF/3.0); //scale ADC data according to reference voltage
 
 		  //get calibration data from memory
 		  int32_t TS_CAL2 = (int32_t) *((uint16_t *) 0x1FFF75CA);
