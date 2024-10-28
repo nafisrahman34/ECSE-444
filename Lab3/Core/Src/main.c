@@ -48,7 +48,6 @@ uint16_t step = precision/period;
 int16_t triangular = 0;
 int16_t sawtooth = 0;
 int8_t direction = 1;
-
 float angle = 0.0f;
 float rad_step = 2 * PI / (period);
 int16_t Asinx;
@@ -120,13 +119,18 @@ int main(void)
 	  if(LEDState){
 		  tri_wave();
 		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
+		  HAL_Delay(0.5);
+		  tri_wave();
+		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
 		  sawtth_wave();
 		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
-		  HAL_Delay(1);
+		  HAL_Delay(0.5);
 	  }else{
 		  sine_wave();
 		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, Asinx);
-		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, Asinx);
+		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, Asinx);
+		  sawtth_wave();
+		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
 		  HAL_Delay(1);
 	  }
 
@@ -140,22 +144,27 @@ int main(void)
   * @retval None
   */
 void tri_wave(void){
-	triangular += direction * step * 2;
-	if (triangular >= precision){
-		triangular = precision;
+	int16_t t = triangular + direction * step ;
+
+	if ( t >= precision || t  <= 0){
+
+		if(t <= 0) triangular = 0;
+		else triangular = precision;
+
 		direction = -direction;
 
-	}else if (triangular <= 0){
-		triangular = 0;
-		direction = -direction;
-	}
+	}else triangular = t;
 
 }
+
 void sawtth_wave(void){
+
+	if(sawtooth == precision) sawtooth = 0;
 	sawtooth += step;
-	 if (sawtooth >= precision){
-		 sawtooth = 0;
+	if ( sawtooth > precision){
+		sawtooth = precision;
 	 }
+
 }
 
 void sine_wave(void){
