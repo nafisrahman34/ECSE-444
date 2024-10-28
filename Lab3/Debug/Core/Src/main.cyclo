@@ -1,0 +1,9 @@
+../Core/Src/main.c:73:6:HAL_GPIO_EXTI_Callback	1
+../Core/Src/main.c:84:5:main	2
+../Core/Src/main.c:142:6:tri_wave	3
+../Core/Src/main.c:154:6:sawtth_wave	2
+../Core/Src/main.c:161:6:sine_wave	3
+../Core/Src/main.c:167:6:SystemClock_Config	4
+../Core/Src/main.c:218:13:MX_DAC1_Init	4
+../Core/Src/main.c:269:13:MX_GPIO_Init	1
+../Core/Src/main.c:312:6:Error_Handler	1

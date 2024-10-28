@@ -60,8 +60,8 @@ all: main-build
 main-build: Lab2_2.elf secondary-outputs
 
 # Tool invocations
-Lab2_2.elf Lab2_2.map: $(OBJS) $(USER_OBJS) C:\Users\User\OneDrive\Desktop\ECSE-444\Lab2_2\STM32L4S5VITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Lab2_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\User\OneDrive\Desktop\ECSE-444\Lab2_2\STM32L4S5VITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab2_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Lab2_2.elf Lab2_2.map: $(OBJS) $(USER_OBJS) D:\Learning\Fall\ 2024\ECSE444\ECSE-444\Lab2_2\STM32L4S5VITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Lab2_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Learning\Fall 2024\ECSE444\ECSE-444\Lab2_2\STM32L4S5VITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab2_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
