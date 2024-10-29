@@ -49,7 +49,7 @@ int16_t triangular = 0;
 int16_t sawtooth = 0;
 int8_t direction = 1;
 float angle = 0.0f;
-float rad_step = 2 * PI / (period);
+float rad_step = PI / (period);
 int16_t Asinx;
 /* USER CODE BEGIN PV */
 
@@ -169,7 +169,7 @@ void sawtth_wave(void){
 
 void sine_wave(void){
 	angle += rad_step;
-	if (angle > 2*PI) angle = 0;
+	if (angle > PI) angle = 0;
 	Asinx = (int)(precision * arm_sin_f32(angle));
 	if (Asinx > precision) Asinx = precision;
 }
