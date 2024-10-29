@@ -18,11 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "arm_math.h"
-#include <stdbool.h>
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "arm_math.h"
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,6 +34,7 @@
 /* USER CODE BEGIN PD */
 #define precision 4095
 #define period 15
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -43,6 +44,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 DAC_HandleTypeDef hdac1;
+
+/* USER CODE BEGIN PV */
 bool LEDState;
 uint16_t step = precision/period;
 int16_t triangular = 0;
@@ -51,20 +54,18 @@ int8_t direction = 1;
 float angle = 0.0f;
 float rad_step = PI / (period);
 int16_t Asinx;
-/* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DAC1_Init(void);
+
+
+/* USER CODE BEGIN PFP */
 void tri_wave(void);
 void sawtth_wave(void);
 void sine_wave(void);
-
-/* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -115,24 +116,25 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
 	  if(LEDState){
-		  tri_wave();
-		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
-		  HAL_Delay(0.5);
-		  tri_wave();
-		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
-		  sawtth_wave();
-		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
-		  HAL_Delay(0.5);
-	  }else{
-		  sine_wave();
-		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, Asinx);
-		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, Asinx);
-		  sawtth_wave();
-		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
-		  HAL_Delay(1);
-	  }
+	  		  tri_wave();
+	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
+	  		  HAL_Delay(0.5);
+	  		  tri_wave();
+	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
+	  		  sawtth_wave();
+	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
+	  		  HAL_Delay(0.5);
+	  	  }else{
+	  		  sine_wave();
+	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, Asinx);
+	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, Asinx);
+	  		  sawtth_wave();
+	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
+	  		  HAL_Delay(1);
+	  	  }
+    /* USER CODE END WHILE */
+
 
     /* USER CODE BEGIN 3 */
   }
