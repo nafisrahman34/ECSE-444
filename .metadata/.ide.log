@@ -1,5 +1,51 @@
-2024-10-25 15:10:29,630 [INFO] Activator:176 - 
-
-
-2024-10-25 15:10:29,635 [INFO] Activator:177 - !SESSION log4j initialized
-2024-10-25 15:10:33,896 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2024-11-04 02:42:28,319 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2024-11-04 02:42:29,156 [INFO] ProjectBuilder:5097 - Time for Generating toolchain IDE Files: 1352mS.
+2024-11-04 02:42:29,157 [INFO] ProjectBuilder:3107 - Time for Copy CMSIS : 1mS.
+2024-11-04 02:42:29,159 [INFO] ProjectBuilder:3107 - Time for Copy CMSIS : 0mS.
+2024-11-04 14:28:34,787 [INFO] WebApp:189 - Connection lost
+2024-11-04 14:28:41,772 [INFO] WebApp:186 - Connection restablished
+2024-11-04 15:19:23,404 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2024-11-04 15:19:49,474 [INFO] DmaTabbedPanel:205 - Cannot restore the selected Tab for DMA
+2024-11-04 15:21:15,400 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 638526416 Bytes (1003487232)
+2024-11-04 15:21:15,449 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 665263056 Bytes (1003487232)
+2024-11-04 15:21:15,809 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 712448976 Bytes (1003487232)
+2024-11-04 15:21:15,943 [INFO] BlockDiagram:2766 - set Specific Code input for plugin: DAC
+2024-11-04 15:21:15,943 [INFO] BlockDiagram:2766 - set Specific Code input for plugin: TIM1_8L4
+2024-11-04 15:21:15,943 [INFO] BlockDiagram:2766 - set Specific Code input for plugin: SYS
+2024-11-04 15:21:15,943 [INFO] BlockDiagram:2766 - set Specific Code input for plugin: RCC
+2024-11-04 15:21:15,943 [INFO] BlockDiagram:2766 - set Specific Code input for plugin: NVIC
+2024-11-04 15:21:15,943 [INFO] BlockDiagram:2766 - set Specific Code input for plugin: DMA
+2024-11-04 15:21:15,943 [INFO] BlockDiagram:2766 - set Specific Code input for plugin: GPIO
+2024-11-04 15:21:15,944 [INFO] CodeGenerator:807 - code generatio: config db path: C:\ST\STM32CubeIDE_1.16.1\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.12.1.202409122256\\db\
+2024-11-04 15:21:16,030 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\license.tmp_save
+2024-11-04 15:21:16,109 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\license.tmp
+2024-11-04 15:21:16,130 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\gpio.tmp_save
+2024-11-04 15:21:16,205 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\gpio.tmp
+2024-11-04 15:21:16,263 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\dma.tmp_save
+2024-11-04 15:21:16,318 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\dma.tmp
+2024-11-04 15:21:16,324 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\dma_GV.tmp_save
+2024-11-04 15:21:16,364 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\dma_GV.tmp
+2024-11-04 15:21:16,383 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Src\stm32l4xx_it.c_save
+2024-11-04 15:21:16,525 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Src\stm32l4xx_it.c
+2024-11-04 15:21:16,538 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Inc\stm32l4xx_it.h_save
+2024-11-04 15:21:16,598 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Inc\stm32l4xx_it.h
+2024-11-04 15:21:16,617 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Src\stm32l4xx_hal_msp.c_save
+2024-11-04 15:21:16,709 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Src\stm32l4xx_hal_msp.c
+2024-11-04 15:21:16,717 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\system.tmp_save
+2024-11-04 15:21:16,763 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\MXTmpFiles\system.tmp
+2024-11-04 15:21:16,779 [INFO] CodeEngine:311 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Inc\stm32l4xx_hal_conf.h_save
+2024-11-04 15:21:16,844 [INFO] CodeEngine:335 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Inc\stm32l4xx_hal_conf.h
+2024-11-04 15:21:16,855 [WARN] IPConfigManager:3554 - IP not found : TIM
+2024-11-04 15:21:16,856 [WARN] CodeGenerator:4002 - IP not found : null
+2024-11-04 15:21:16,872 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Inc\main.h_save
+2024-11-04 15:21:16,938 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Inc\main.h
+2024-11-04 15:21:16,952 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Src\main.c_save
+2024-11-04 15:21:17,048 [INFO] CodeEngine:279 - Generated code: C:\Users\User\OneDrive\Desktop\ECSE-444\Lab3\Core\Src\main.c
+2024-11-04 15:21:17,314 [INFO] ProjectBuilder:3249 - Time for Copy HAL[1] : 106mS.
+2024-11-04 15:21:17,316 [INFO] ProjectBuilder:4828 - Project Generator version: 4.5.0-B34
+2024-11-04 15:21:17,374 [INFO] ConfigFileManager:1531 - The Die is : DIE470
+2024-11-04 15:21:18,148 [INFO] ProjectBuilder:5097 - Time for Generating toolchain IDE Files: 832mS.
+2024-11-04 15:21:18,148 [INFO] ProjectBuilder:3107 - Time for Copy CMSIS : 0mS.
+2024-11-04 15:21:18,150 [INFO] ProjectBuilder:3107 - Time for Copy CMSIS : 0mS.
+2024-11-04 17:20:24,159 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2024-11-04 17:20:24,160 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 

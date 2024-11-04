@@ -44,6 +44,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 DAC_HandleTypeDef hdac1;
+DMA_HandleTypeDef hdma_dac1_ch1;
+
+TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 bool LEDState;
@@ -54,14 +57,32 @@ int8_t direction = 1;
 float angle = 0.0f;
 float rad_step = PI / (period);
 int16_t Asinx;
+
+int interruptCounter;
+//Sample rate is 44.1kHz & for 1kHz sine wave we need 44.1/1 = 44.1 samples per cycle
+int sine1kHzArrayLength = 44;
+uint32_t sine1kHz[44];
+//Sample rate is 44.1kHz & note C6 is 1047Hz so we need 44.1/1.047 = 42.1 samples per cycle
+int noteC6ArrayLength = 42;
+uint32_t noteC6[42];
+//Note E6 is 1318Hz so we need 44.1/1.318 = 33.5 samples per cycle
+int noteE6ArrayLength = 34;
+uint32_t noteE6[34];
+//Note G6 is 1568Hz so we need 44.1/1.568 = 28.1 samples per cycle
+int noteG6ArrayLength = 28;
+uint32_t noteG6[28];
+
+uint32_t* notes[3] = {noteC6, noteE6, noteG6};
+int notesArrayLengths[3] = {42, 34, 28};
+int buttonCounter=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_DAC1_Init(void);
-
-
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 void tri_wave(void);
 void sawtth_wave(void);
@@ -74,7 +95,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	LEDState = !LEDState;
 	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, LEDState);
+
+	HAL_DAC_Stop_DMA(&hdac1, DAC_CHANNEL_1);
+	HAL_DAC_Start_DMA(&hdac1, DAC1_CHANNEL_1, notes[buttonCounter], notesArrayLengths[buttonCounter], DAC_ALIGN_12B_R);
+	buttonCounter = (buttonCounter+1)%3;
 }
+
+//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim){
+//	if(htim == &htim2){
+//		HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sine1kHz[interruptCounter]);
+//		interruptCounter = (interruptCounter+1)%sine1kHzArrayLength;
+//	}
+//}
 /* USER CODE END 0 */
 
 /**
@@ -85,6 +117,58 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	//populating arrays with sine wave values for different note frequencies:
+	for(int i=0; i<noteC6ArrayLength; i++){
+		float32_t angleRadians = 2.0*PI*((double)i/sine1kHzArrayLength);
+		sine1kHz[i] = (uint32_t) precision * arm_sin_f32(angleRadians);
+	}
+
+	for(int i=0; i<noteC6ArrayLength; i++){
+		float32_t angleRadians = 2.0*PI*((double)i/noteC6ArrayLength);
+		noteC6[i] =(uint32_t) precision * arm_sin_f32(angleRadians);
+	}
+
+	for(int i=0; i<noteE6ArrayLength; i++){
+		float32_t angleRadians = 2.0*PI*((double)i/noteE6ArrayLength);
+		noteE6[i] = (uint32_t) precision * arm_sin_f32(angleRadians);
+	}
+
+	for(int i=0; i<noteG6ArrayLength; i++){
+		float32_t angleRadians = 2.0*PI*((double)i/noteG6ArrayLength);
+		noteG6[i] = (uint32_t) precision * arm_sin_f32(angleRadians);
+	}
+
+
+	void tri_wave(void){
+	  	int16_t t = triangular + direction * step ;
+
+	  	if ( t >= precision || t  <= 0){
+
+	  		if(t <= 0) triangular = 0;
+	  		else triangular = precision;
+
+	  		direction = -direction;
+
+	  	}else triangular = t;
+
+	  }
+
+	  void sawtth_wave(void){
+
+	  	if(sawtooth == precision) sawtooth = 0;
+	  	sawtooth += step;
+	  	if ( sawtooth > precision){
+	  		sawtooth = precision;
+	  	 }
+
+	  }
+
+	  void sine_wave(void){
+	  	angle += rad_step;
+	  	if (angle > PI) angle = 0;
+	  	Asinx = (int)(precision * arm_sin_f32(angle));
+	  	if (Asinx > precision) Asinx = precision;
+	  }
 
   /* USER CODE END 1 */
 
@@ -106,35 +190,38 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_DAC1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
-  HAL_DAC_Start(&hdac1, DAC_CHANNEL_2);
+  //HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+  //HAL_DAC_Start_DMA(&hdac1, DAC1_CHANNEL_1, sine1kHz, sine1kHzArrayLength, DAC_ALIGN_12B_R);
+  HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  //part 1:
 	  if(LEDState){
 	  		  tri_wave();
-	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
+	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
 	  		  HAL_Delay(0.5);
 	  		  tri_wave();
-	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
+	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
 	  		  sawtth_wave();
-	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
+	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
 	  		  HAL_Delay(0.5);
 	  	  }else{
 	  		  sine_wave();
-	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, Asinx);
+	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, Asinx);
 	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, Asinx);
 	  		  sawtth_wave();
-	  		  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
+	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
 	  		  HAL_Delay(1);
 	  	  }
     /* USER CODE END WHILE */
-
 
     /* USER CODE BEGIN 3 */
   }
@@ -145,36 +232,6 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
-void tri_wave(void){
-	int16_t t = triangular + direction * step ;
-
-	if ( t >= precision || t  <= 0){
-
-		if(t <= 0) triangular = 0;
-		else triangular = precision;
-
-		direction = -direction;
-
-	}else triangular = t;
-
-}
-
-void sawtth_wave(void){
-
-	if(sawtooth == precision) sawtooth = 0;
-	sawtooth += step;
-	if ( sawtooth > precision){
-		sawtooth = precision;
-	 }
-
-}
-
-void sine_wave(void){
-	angle += rad_step;
-	if (angle > PI) angle = 0;
-	Asinx = (int)(precision * arm_sin_f32(angle));
-	if (Asinx > precision) Asinx = precision;
-}
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -250,7 +307,7 @@ static void MX_DAC1_Init(void)
   /** DAC channel OUT1 config
   */
   sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
-  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  sConfig.DAC_Trigger = DAC_TRIGGER_T2_TRGO;
   sConfig.DAC_HighFrequency = DAC_HIGH_FREQUENCY_INTERFACE_MODE_ABOVE_80MHZ;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
@@ -262,6 +319,7 @@ static void MX_DAC1_Init(void)
 
   /** DAC channel OUT2 config
   */
+  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
   {
     Error_Handler();
@@ -269,6 +327,68 @@ static void MX_DAC1_Init(void)
   /* USER CODE BEGIN DAC1_Init 2 */
 
   /* USER CODE END DAC1_Init 2 */
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 2722;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMAMUX1_CLK_ENABLE();
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
 
 }
 
