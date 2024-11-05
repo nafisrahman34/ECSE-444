@@ -57,22 +57,23 @@ int8_t direction = 1;
 float angle = 0.0f;
 float rad_step = PI / (period);
 int16_t Asinx;
+uint32_t sineValue;
 
 int interruptCounter;
 //Sample rate is 44.1kHz & for 1kHz sine wave we need 44.1/1 = 44.1 samples per cycle
-int sine1kHzArrayLength = 44;
-uint32_t sine1kHz[44];
+int sine1kHzArrayLength = 42;
+int32_t sine1kHz[42];
 //Sample rate is 44.1kHz & note C6 is 1047Hz so we need 44.1/1.047 = 42.1 samples per cycle
 int noteC6ArrayLength = 42;
-uint32_t noteC6[42];
+int32_t noteC6[42];
 //Note E6 is 1318Hz so we need 44.1/1.318 = 33.5 samples per cycle
 int noteE6ArrayLength = 34;
-uint32_t noteE6[34];
+int32_t noteE6[34];
 //Note G6 is 1568Hz so we need 44.1/1.568 = 28.1 samples per cycle
 int noteG6ArrayLength = 28;
-uint32_t noteG6[28];
+int32_t noteG6[28];
 
-uint32_t* notes[3] = {noteC6, noteE6, noteG6};
+int32_t* notes[3] = {noteC6, noteE6, noteG6};
 int notesArrayLengths[3] = {42, 34, 28};
 int buttonCounter=0;
 /* USER CODE END PV */
@@ -120,22 +121,26 @@ int main(void)
 	//populating arrays with sine wave values for different note frequencies:
 	for(int i=0; i<noteC6ArrayLength; i++){
 		float32_t angleRadians = 2.0*PI*((double)i/sine1kHzArrayLength);
-		sine1kHz[i] = (uint32_t) precision * arm_sin_f32(angleRadians);
+		sine1kHz[i] = (int32_t) ((precision/2 * arm_sin_f32(angleRadians))+(precision/2+0.1));
+		sineValue = sine1kHz[i];
 	}
 
 	for(int i=0; i<noteC6ArrayLength; i++){
 		float32_t angleRadians = 2.0*PI*((double)i/noteC6ArrayLength);
-		noteC6[i] =(uint32_t) precision * arm_sin_f32(angleRadians);
+		noteC6[i] =(int32_t) (precision/2 * arm_sin_f32(angleRadians))+(precision/2);
+		sineValue = noteC6[i];
 	}
 
 	for(int i=0; i<noteE6ArrayLength; i++){
 		float32_t angleRadians = 2.0*PI*((double)i/noteE6ArrayLength);
-		noteE6[i] = (uint32_t) precision * arm_sin_f32(angleRadians);
+		noteE6[i] = (int32_t) (precision/2 * arm_sin_f32(angleRadians))+(precision/2);
+		sineValue = noteE6[i];
 	}
 
 	for(int i=0; i<noteG6ArrayLength; i++){
 		float32_t angleRadians = 2.0*PI*((double)i/noteG6ArrayLength);
-		noteG6[i] = (uint32_t) precision * arm_sin_f32(angleRadians);
+		noteG6[i] = (int32_t) (precision/2 * arm_sin_f32(angleRadians))+(precision/2);
+		sineValue = noteG6[i];
 	}
 
 
@@ -204,23 +209,23 @@ int main(void)
   while (1)
   {
 	  //part 1:
-	  if(LEDState){
-	  		  tri_wave();
+	  //if(LEDState){
+	  		  //tri_wave();
 	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
-	  		  HAL_Delay(0.5);
-	  		  tri_wave();
+	  		  //HAL_Delay(0.5);
+	  		  //tri_wave();
 	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangular);
-	  		  sawtth_wave();
+	  		  //sawtth_wave();
 	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
-	  		  HAL_Delay(0.5);
-	  	  }else{
-	  		  sine_wave();
+	  		  //HAL_Delay(0.5);
+	  	  //}else{
+	  		  //sine_wave();
 	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, Asinx);
 	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, Asinx);
-	  		  sawtth_wave();
+	  		  //sawtth_wave();
 	  		  //HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, sawtooth);
-	  		  HAL_Delay(1);
-	  	  }
+	  		  //HAL_Delay(1);
+	  	  //}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
