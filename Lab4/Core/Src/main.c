@@ -24,6 +24,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "stm32l4s5i_iot01_accelero.h"
+#include "stm32l4s5i_iot01_magneto.h"
+#include "stm32l4s5i_iot01_tsensor.h"
+#include "stm32l4s5i_iot01_psensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +53,7 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 uint8_t currentSensor = 0;
 char output[100];
-bool LEDState;
+bool LEDState = true;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,28 +62,10 @@ static void MX_GPIO_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void showTemp(){
-	float temp = BSP_TSENSOR_ReadTemp();
-	sprintf(output, "Temperature: %.2f %%\r\n", temp);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
-void showPressure(){
-	float pressure = BSP_PSENSOR_ReadPressure();
-	sprintf(output, "Temperature: %.2f %%\r\n", pressure);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
-void showMagneto(){
-	uint16_t mag[3];
-	BSP_MAGNETO_GetXYZ(mag);
-	sprintf(output, "Magnetometer: X=%d Y=%d Z=%d\r\n",mag[0], mag[1], mag[2]);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
-void showAcc(){
-	uint16_t acc[3];
-	BSP_ACCELERO_AccGetXYZ(acc);
-	sprintf(output, "Accelerator: X=%d Y=%d Z=%d\r\n",acc[0], acc[1], acc[2]);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
+void showTemp(void);
+void showAcc(void);
+void showMagneto(void);
+void showPressure(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -124,10 +110,18 @@ int main(void)
   MX_I2C2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  BSP_TSENSOR_Init();
-  BSP_ACCELERO_Init();
-  BSP_MAGNETO_Init();
-  BSP_PSENSOR_Init();
+  uint32_t s1 = BSP_TSENSOR_Init();
+  if(s1 != TSENSOR_OK)Error_Handler();
+
+  ACCELERO_StatusTypeDef s2 = BSP_ACCELERO_Init();
+  if(s2 != ACCELERO_OK)Error_Handler();
+
+  MAGNETO_StatusTypeDef s3 = BSP_MAGNETO_Init();
+  if(s3 != MAGNETO_OK)Error_Handler();
+
+
+  uint32_t s4 = BSP_PSENSOR_Init();
+  if(s4 != PSENSOR_OK)Error_Handler();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -332,7 +326,28 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void showTemp(){
+	float temp = BSP_TSENSOR_ReadTemp();
+	sprintf(output, "Temperature: %.2f %%\r\n", temp);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
+void showPressure(){
+	float pressure = BSP_PSENSOR_ReadPressure();
+	sprintf(output, "Pressure: %.2f %%\r\n", pressure);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
+void showMagneto(){
+	uint16_t mag[3];
+	BSP_MAGNETO_GetXYZ(mag);
+	sprintf(output, "Magnetometer: X=%d Y=%d Z=%d\r\n",mag[0], mag[1], mag[2]);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
+void showAcc(){
+	uint16_t acc[3];
+	BSP_ACCELERO_AccGetXYZ(acc);
+	sprintf(output, "Accelerator: X=%d Y=%d Z=%d\r\n",acc[0], acc[1], acc[2]);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
 /* USER CODE END 4 */
 
 /**

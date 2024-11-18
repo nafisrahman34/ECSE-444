@@ -27,7 +27,22 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ ../Core/Inc/stm32l4s5i_iot01_accelero.h ../Core/Inc/stm32l4s5i_iot01.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h \
+ ../Core/Inc/stm32l4s5i_iot01_magneto.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h \
+ ../Core/Inc/stm32l4s5i_iot01_tsensor.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/hts221/hts221.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/hsensor.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/tsensor.h \
+ ../Core/Inc/stm32l4s5i_iot01_psensor.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/lps22hb.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/psensor.h \
+ D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/tsensor.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -58,3 +73,19 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+../Core/Inc/stm32l4s5i_iot01_accelero.h:
+../Core/Inc/stm32l4s5i_iot01.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h:
+../Core/Inc/stm32l4s5i_iot01_magneto.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h:
+../Core/Inc/stm32l4s5i_iot01_tsensor.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/hts221/hts221.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/hsensor.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/tsensor.h:
+../Core/Inc/stm32l4s5i_iot01_psensor.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/lps22hb.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/psensor.h:
+D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/tsensor.h:
