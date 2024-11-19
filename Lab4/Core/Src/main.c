@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -50,10 +51,19 @@ I2C_HandleTypeDef hi2c2;
 
 UART_HandleTypeDef huart1;
 
+osThreadId changeModeHandle;
+osThreadId readSensorDataHandle;
+osThreadId outputDataHandle;
 /* USER CODE BEGIN PV */
 uint8_t currentSensor = 0;
-char output[100];
+bool changeMode;
+char output[200];
 bool LEDState = true;
+
+int temp;
+int pressure;
+uint16_t mag[3];
+uint16_t acc[3];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,6 +71,10 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_USART1_UART_Init(void);
+void changeModeTask(void const * argument);
+void readSensorDataTask(void const * argument);
+void outputDataTask(void const * argument);
+
 /* USER CODE BEGIN PFP */
 void showTemp(void);
 void showAcc(void);
@@ -71,8 +85,7 @@ void showPressure(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-
-        currentSensor = (currentSensor + 1) % 4; // Cycle through 4 sensors
+        changeMode = true; // Cycle through 4 sensors
         LEDState = !LEDState;
         HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, LEDState);
 }
@@ -110,45 +123,59 @@ int main(void)
   MX_I2C2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  uint32_t s1 = BSP_TSENSOR_Init();
-  if(s1 != TSENSOR_OK)Error_Handler();
 
-  ACCELERO_StatusTypeDef s2 = BSP_ACCELERO_Init();
-  if(s2 != ACCELERO_OK)Error_Handler();
-
-  MAGNETO_StatusTypeDef s3 = BSP_MAGNETO_Init();
-  if(s3 != MAGNETO_OK)Error_Handler();
-
-
-  uint32_t s4 = BSP_PSENSOR_Init();
-  if(s4 != PSENSOR_OK)Error_Handler();
   /* USER CODE END 2 */
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* definition and creation of changeMode */
+  osThreadDef(changeMode, changeModeTask, osPriorityNormal, 0, 128);
+  changeModeHandle = osThreadCreate(osThread(changeMode), NULL);
+
+  /* definition and creation of readSensorData */
+  osThreadDef(readSensorData, readSensorDataTask, osPriorityNormal, 0, 128);
+  readSensorDataHandle = osThreadCreate(osThread(readSensorData), NULL);
+
+  /* definition and creation of outputData */
+  osThreadDef(outputData, outputDataTask, osPriorityNormal, 0, 128);
+  outputDataHandle = osThreadCreate(osThread(outputData), NULL);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  switch (currentSensor) {
-	  		  case 0:
-	  			  showTemp();
-	  			  break;
-	  		  case 1:
-	  			  showPressure();
-	  			  break;
-	  		  case 2:
-	  			  showMagneto();
-	  			  break;
-	  		  case 3:
-	  			  showAcc();
-	  			  break;
-	  	HAL_Delay(100);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
-}
+
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -303,7 +330,6 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_RESET);
@@ -321,34 +347,130 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(led_GPIO_Port, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-void showTemp(){
-	float temp = BSP_TSENSOR_ReadTemp();
-	sprintf(output, "Temperature: %.2f %%\r\n", temp);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
-void showPressure(){
-	float pressure = BSP_PSENSOR_ReadPressure();
-	sprintf(output, "Pressure: %.2f %%\r\n", pressure);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
-void showMagneto(){
-	uint16_t mag[3];
-	BSP_MAGNETO_GetXYZ(mag);
-	sprintf(output, "Magnetometer: X=%d Y=%d Z=%d\r\n",mag[0], mag[1], mag[2]);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
-void showAcc(){
-	uint16_t acc[3];
-	BSP_ACCELERO_AccGetXYZ(acc);
-	sprintf(output, "Accelerator: X=%d Y=%d Z=%d\r\n",acc[0], acc[1], acc[2]);
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
-}
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_changeModeTask */
+/**
+  * @brief  Function implementing the changeMode thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_changeModeTask */
+void changeModeTask(void const * argument)
+{
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(100);
+    if(changeMode==true){
+    	currentSensor = (currentSensor+1)%4;
+    	changeMode = false;
+    }
+  }
+  /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_readSensorDataTask */
+/**
+* @brief Function implementing the readSensorData thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_readSensorDataTask */
+void readSensorDataTask(void const * argument)
+{
+  /* USER CODE BEGIN readSensorDataTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(100);
+
+	switch (currentSensor) {
+				  case 0:
+					  if(BSP_TSENSOR_Init() != TSENSOR_OK)Error_Handler();
+					  temp = (int)  BSP_TSENSOR_ReadTemp();
+					  break;
+
+				  case 1:
+					  if(BSP_PSENSOR_Init() != PSENSOR_OK)Error_Handler();
+					  pressure = (int) BSP_PSENSOR_ReadPressure();
+					  break;
+				  case 2:
+					  if(BSP_MAGNETO_Init() != MAGNETO_OK)Error_Handler();
+					  BSP_MAGNETO_GetXYZ(mag);
+					  break;
+				  case 3:
+					  if(BSP_ACCELERO_Init() != ACCELERO_OK)Error_Handler();
+					  BSP_ACCELERO_AccGetXYZ(acc);
+					  break;
+	}
+  }
+  /* USER CODE END readSensorDataTask */
+}
+
+/* USER CODE BEGIN Header_outputDataTask */
+/**
+* @brief Function implementing the outputData thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_outputDataTask */
+void outputDataTask(void const * argument)
+{
+  /* USER CODE BEGIN outputDataTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(100);
+    switch (currentSensor) {
+				  case 0:
+					  sprintf(output, "Temperature: %.2d %\r\n", temp);
+					  break;
+				  case 1:
+					  sprintf(output, "Pressure: %.2d %\r\n", pressure);
+					  break;
+				  case 2:
+					  sprintf(output, "Magnetometer: X=%d Y=%d Z=%d\r\n",(int) mag[0], (int) mag[1], (int) mag[2]);
+					  break;
+				  case 3:
+					  sprintf(output, "Accelerator: X=%d Y=%d Z=%d\r\n", (int) acc[0], (int) acc[1], (int) acc[2]);
+					  break;
+	}
+    HAL_UART_Transmit(&huart1, (uint8_t*)output,  (uint16_t)strlen(output), HAL_MAX_DELAY);
+  }
+  /* USER CODE END outputDataTask */
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM17 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM17) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

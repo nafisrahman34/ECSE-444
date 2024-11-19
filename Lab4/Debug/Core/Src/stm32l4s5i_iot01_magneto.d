@@ -28,10 +28,12 @@ Core/Src/stm32l4s5i_iot01_magneto.o: \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h \
- D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h
+ C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h \
+ C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h
 ../Core/Inc/stm32l4s5i_iot01_magneto.h:
 ../Core/Inc/stm32l4s5i_iot01.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
@@ -61,7 +63,9 @@ Core/Src/stm32l4s5i_iot01_magneto.o: \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h:
-D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h:
+C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h:
+C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h:

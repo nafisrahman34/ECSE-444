@@ -27,11 +27,13 @@ Core/Src/stm32l4s5i_iot01_gyro.o: ../Core/Src/stm32l4s5i_iot01_gyro.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h \
- D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h \
- D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h
+ C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h \
+ C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h \
+ C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h
 ../Core/Inc/stm32l4s5i_iot01_gyro.h:
 ../Core/Inc/stm32l4s5i_iot01.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
@@ -61,8 +63,10 @@ Core/Src/stm32l4s5i_iot01_gyro.o: ../Core/Src/stm32l4s5i_iot01_gyro.c \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h:
-D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h:
-D:/Learning/Fall\ 2024/ECSE444/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h:
+C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h:
+C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h:
+C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h:
