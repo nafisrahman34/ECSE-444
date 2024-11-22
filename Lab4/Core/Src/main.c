@@ -62,8 +62,8 @@ bool LEDState = true;
 
 int temp;
 int pressure;
-uint16_t mag[3];
-uint16_t acc[3];
+int16_t mag[3];
+int16_t acc[3];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -85,6 +85,7 @@ void showPressure(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+//		currentSensor = (currentSensor + 1) % 4;
         changeMode = true; // Cycle through 4 sensors
         LEDState = !LEDState;
         HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, LEDState);
@@ -123,7 +124,10 @@ int main(void)
   MX_I2C2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+//  BSP_TSENSOR_Init();
+//  BSP_ACCELERO_Init();
+//  BSP_MAGNETO_Init();
+//  BSP_PSENSOR_Init();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -152,14 +156,14 @@ int main(void)
   readSensorDataHandle = osThreadCreate(osThread(readSensorData), NULL);
 
   /* definition and creation of outputData */
-  osThreadDef(outputData, outputDataTask, osPriorityNormal, 0, 128);
+  osThreadDef(outputData, outputDataTask, osPriorityIdle, 0, 128);
   outputDataHandle = osThreadCreate(osThread(outputData), NULL);
 
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
-
-  /* Start scheduler */
+//  /* USER CODE BEGIN RTOS_THREADS */
+////  /* add threads, ... */
+//  /* USER CODE END RTOS_THREADS */
+//
+//  /* Start scheduler */
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
@@ -172,6 +176,21 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+//	  switch (currentSensor) {
+//	 	  		  case 0:
+//	 	  			  showTemp();
+//	 	  			  break;
+//	 	  		  case 1:
+//	 	  			  showPressure();
+//	 	  			  break;
+//	 	  		  case 2:
+//	 	  			  showMagneto();
+//	 	  			  break;
+//	 	  		  case 3:
+//	 	  			  showAcc();
+//	 	  			  break;
+//	  }
+//	 	  	HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
@@ -356,6 +375,28 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void showTemp(){
+	float temp = BSP_TSENSOR_ReadTemp();
+	sprintf(output, "Temperature: %.2f %\r\n", temp);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
+void showPressure(){
+	float pressure = BSP_PSENSOR_ReadPressure();
+	sprintf(output, "Pressure: %.2f %\r\n", pressure);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
+void showMagneto(){
+	int16_t mag[3];
+	BSP_MAGNETO_GetXYZ(mag);
+	sprintf(output, "Magnetometer: X=%d Y=%d Z=%d\r\n",mag[0], mag[1], mag[2]);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
+void showAcc(){
+	int16_t acc[3];
+	BSP_ACCELERO_AccGetXYZ(acc);
+	sprintf(output, "Accelerator: X=%d Y=%d Z=%d\r\n",acc[0], acc[1], acc[2]);
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, strlen(output), HAL_MAX_DELAY);
+}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_changeModeTask */

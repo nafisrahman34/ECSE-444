@@ -48,20 +48,20 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Core/Inc/stm32l4s5i_iot01_accelero.h ../Core/Inc/stm32l4s5i_iot01.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h \
  ../Core/Inc/stm32l4s5i_iot01_magneto.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h \
  ../Core/Inc/stm32l4s5i_iot01_tsensor.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/hts221.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/hsensor.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/tsensor.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/hts221.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/hsensor.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/tsensor.h \
  ../Core/Inc/stm32l4s5i_iot01_psensor.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/lps22hb.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/psensor.h \
- C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/tsensor.h
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/lps22hb.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/psensor.h \
+ C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/tsensor.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -113,17 +113,17 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 ../Core/Inc/stm32l4s5i_iot01_accelero.h:
 ../Core/Inc/stm32l4s5i_iot01.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/lsm6dsl.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/accelero.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lsm6dsl/../Common/gyro.h:
 ../Core/Inc/stm32l4s5i_iot01_magneto.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/lis3mdl.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lis3mdl/../Common/magneto.h:
 ../Core/Inc/stm32l4s5i_iot01_tsensor.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/hts221.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/hsensor.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/tsensor.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/hts221.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/hsensor.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/hts221/../Common/tsensor.h:
 ../Core/Inc/stm32l4s5i_iot01_psensor.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/lps22hb.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/psensor.h:
-C:/Users/User/OneDrive/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/tsensor.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/lps22hb.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/psensor.h:
+C:/Users/Admin/Desktop/ECSE-444/Lab4/Drivers/Components/../Components/lps22hb/../Common/tsensor.h:
